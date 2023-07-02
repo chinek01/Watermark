@@ -22,6 +22,18 @@ class TextWatermark:
         self.fill_fg = self.WATERMARK_TEXT_FG
         self.font = self.WATERMARK_TEXT_FONT
 
+    def set_image(self,
+                  image: ImageDraw):
+        """
+        set image to watermark ;)
+        :param image:
+        :return:
+        """
+        if not isinstance(image, ImageDraw):
+            raise ValueError("Incorrect value, must be ImageDraw")
+
+        self.draw = ImageDraw.Draw(image)
+
     def set_watermark_text(self,
                            watermark_text: str):
         """
@@ -66,7 +78,11 @@ class TextWatermark:
 
     def set_watermark_font(self,
                            font: ImageFont.truetyp):
-
+        """
+        Set font like ImageFont.truetype('Arial bold', 24)
+        :param font: ImageFont.truetype
+        :return: None
+        """
         if not isinstance(font, ImageFont.truetype):
             raise ValueError("Incorrect typy of variable")
 
