@@ -12,10 +12,13 @@ import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 
+from TextWatermark.TextWatermark import TextWatermark as twm
+
 # ---------------------------- CONSTANTS ------------------------------- #
 BG_COLOR = '#787878'
 
-# ---------------------------- SELECT FILE FUNC------------------------- #
+
+# ---------------------------- SELECT FILE FUNC ------------------------ #
 
 
 def select_file():
