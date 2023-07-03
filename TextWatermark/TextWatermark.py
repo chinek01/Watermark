@@ -22,6 +22,32 @@ class TextWatermark:
         self.fill_fg = self.WATERMARK_TEXT_FG
         self.font = self.WATERMARK_TEXT_FONT
 
+    def put_watermark_on_image(self,
+                               image=None,
+                               text_watermark=None,
+                               fill_fg=None,
+                               font=None):
+
+        if image is not None:
+            self.set_image(image)
+
+        if text_watermark is not None:
+            self.set_watermark_text(text_watermark)
+
+        if fill_fg is not None:
+            self.set_watermark_fill_fg(fill_fg)
+
+        if font is not None:
+            self.set_watermark_font(font)
+
+        self.draw.text(
+            # geometry ,
+            # text,
+            fill=self.fill_fg,
+            font=self.font,
+            anchor='ms'
+        )
+
     def set_image(self,
                   image: ImageDraw):
         """
