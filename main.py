@@ -17,6 +17,7 @@ from TextWatermark.TextWatermark import TextWatermark as twm
 # ---------------------------- CONSTANTS ------------------------------- #
 BG_COLOR = '#787878'
 
+text_wm = twm()
 
 # ---------------------------- SELECT FILE FUNC ------------------------ #
 
