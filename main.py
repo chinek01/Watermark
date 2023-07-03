@@ -12,8 +12,9 @@ import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 from tkinter import ttk
+import os
 
-from TextWatermark.TextWatermark import TextWatermark as twm
+from TextWatermark.TextWatermark import TextWatermark
 
 # ---------------------------- CONSTANTS ------------------------------- #
 BG_COLOR = '#787878'
@@ -21,16 +22,27 @@ LABEL_FONT_32 = ('NewYork', 32)
 LABEL_FONT_24 = ('NewYork', 24)
 LABEL_FONT_18 = ('NewYork', 18)
 
-text_wm = twm()
+text_wm = TextWatermark()
 
-# ---------------------------- SELECT FILE FUNC ------------------------ #
+# ---------------------------- GLOBAL VARIABLE ------------------------------- #
+open_file_path = None
+save_file_path = None
 
 
-def select_file():
+# init window
+window = tk.Tk()
+window.title('Portfolio - Watermark by MC')
+window.minsize(width=800, height=600)
+window['bg'] = BG_COLOR
+
+# ---------------------------- OPEN FILE FUNC ------------------------ #
+
+
+def open_file_dialog():
     filetype = (
         ('image files - jpg', '*.jpg'),
         ('image files - png', '*.png'),
-        ('all files', '*.*')
+        ('all files', '*.*'),
     )
 
     filename = fd.askopenfilename(
@@ -39,23 +51,75 @@ def select_file():
         filetypes=filetype
     )
 
-    showinfo(
-        title="Selected files",
-        message=filename
-    )
+    if filename:
+        filepath = os.path.abspath(filename)
+
+        # do usuniecia
+        # showinfo(
+        #     title="Selected files",
+        #     message=filename
+        # )
+
+        # tk.Label(
+        #     window,
+        #     text="This File is located at: " + str(filepath),
+        #     font=LABEL_FONT_18
+        # ).pack()
+
+        global open_file_path
+        open_file_path = filepath
 
     return filename
+
+# ---------------------------- SAVE FILE FUNC ------------------------- #
+
+
+def save_file_dialog():
+
+    filetype = (
+        ('all files', '*.*'),
+    )
+
+    try:
+        file = fd.asksaveasfile()
+
+        global save_file_path
+        save_file_path = file
+        #
+        # if file:
+        #     return file
+
+        wa_text = watermark_entries.get().__str__()
+
+        if wa_text is None:
+            wa_text = 'test'
+
+        global text_wm
+        text_wm.set_image(open_file_path)
+        text_wm.set_watermark_text(wa_text)
+        text_wm.put_watermark_on_image()
+        text_wm.save_watermark_image(save_file_path)
+
+        # tk.Label(
+        #     window,
+        #     text="File save at: " + str(file),
+        #     font=LABEL_FONT_18
+        # ).pack()
+
+        showinfo(
+            title="Info",
+            message="Image saved correctly :)"
+        )
+
+    except Exception as e:
+        showinfo(
+            title="Error",
+            message=e.__str__()
+        )
 
 
 # ---------------------------- UI SETUP ------------------------------- #
 
-# init window
-window = tk.Tk()
-window.title('Portfolio - Watermark by MC')
-window.minsize(width=800, height=600)
-window['bg'] = BG_COLOR
-# window.config(padx=50, pady=50)
-# window['bg'] = "#787878"
 
 # title label
 title_label = tk.Label(
@@ -126,9 +190,20 @@ image_sec_open_button = tk.Button(
     window,
     text="Open file",
     bg=BG_COLOR,
-    command=select_file
+    command=open_file_dialog
 )
 image_sec_open_button.pack()
+
+
+
+# save file dialog
+save_file_button = tk.Button(
+    window,
+    text="Save watermark file",
+    bg=BG_COLOR,
+    command=save_file_dialog
+)
+save_file_button.pack()
 
 
 # main loop to run app
