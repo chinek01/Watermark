@@ -11,11 +11,15 @@ Author: MC
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
+from tkinter import ttk
 
 from TextWatermark.TextWatermark import TextWatermark as twm
 
 # ---------------------------- CONSTANTS ------------------------------- #
 BG_COLOR = '#787878'
+LABEL_FONT_32 = ('NewYork', 32)
+LABEL_FONT_24 = ('NewYork', 24)
+LABEL_FONT_18 = ('NewYork', 18)
 
 text_wm = twm()
 
@@ -53,88 +57,78 @@ window['bg'] = BG_COLOR
 # window.config(padx=50, pady=50)
 # window['bg'] = "#787878"
 
-window.columnconfigure(0, weight=1)
-window.columnconfigure(1, weight=1)
-
 # title label
 title_label = tk.Label(
     text="Watermark maker by MC",
-    font=("Arial bold", 32),
+    font=LABEL_FONT_32,
     fg='Black',
-    bg=BG_COLOR)
-title_label.grid(
-    row=0,
-    column=0,
-    columnspan=2
+    bg=BG_COLOR
 )
+title_label.pack()
 
-# watermark section
-watermark_title_label = tk.Label(
+# separator
+sep_style = ttk.Style()
+sep_style.configure('blue.TSeparator', background='blue')
+
+sep01 = ttk.Separator(
+    window,
+    orient='horizontal',
+    style='blue.TSeparator'
+)
+sep01.pack(fill='x')
+
+# walić to nie będzie separatora :(
+
+# watermark sectoion
+watermark_section_label = tk.Label(
     text="Watermark section",
-    font=('Arial bold', 24),
+    font=LABEL_FONT_24,
     fg='black',
     bg=BG_COLOR
 )
-watermark_title_label.grid(
-    row=1,
-    column=0)
+watermark_section_label.pack()
 
-watermark_text_label = tk.Label(
+# watermark_title_label
+watermark_title_label = tk.Label(
     text="Please enter text below:",
-    font=("Arial", 18),
+    font=LABEL_FONT_18,
     fg='white',
     bg=BG_COLOR
 )
-watermark_text_label.grid(
-    row=2,
-    column=0
-)
+watermark_title_label.pack()
 
-watermark_entries = tk.Entry(width=40)
-watermark_entries.insert(tk.END, string='Please enter text')
-watermark_entries.grid(
-    row=3,
-    column=0
-)
+# watermark entries
+watermark_entries = tk.Entry(width=75)
+watermark_entries.pack()
+
+# maybe someday in this place will be separator
 
 # image section
-image_sec_title_label = tk.Label(
+image_title_section = tk.Label(
     text="Image section",
-    font=('Arial bold', 24),
+    font=LABEL_FONT_24,
     fg='black',
     bg=BG_COLOR
 )
-image_sec_title_label.grid(
-    row=1,
-    column=1
-)
+image_title_section.pack()
 
-image_sec_select_label = tk.Label(
+# image_section_label
+image_section_label = tk.Label(
     text="Select image:",
-    font=('Arial', 18),
+    font=LABEL_FONT_18,
     fg='white',
     bg=BG_COLOR
 )
-image_sec_select_label.grid(
-    row=2,
-    column=1
-)
+image_section_label.pack()
 
-# open file dialog - button
+# open file dialog
 image_sec_open_button = tk.Button(
     window,
     text="Open file",
     bg=BG_COLOR,
     command=select_file
 )
-
-image_sec_open_button.grid(
-    row=3,
-    column=1
-)
-
-
-
+image_sec_open_button.pack()
 
 
 # main loop to run app
